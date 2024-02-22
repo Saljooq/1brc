@@ -25,7 +25,7 @@ int main(){
     // Read from the text file
     std::ifstream MyReadFile("../measurements.txt");
 
-    auto max = 1000;
+    auto max = 100;
     auto counter = 0;
 
     float f;
@@ -35,17 +35,14 @@ int main(){
 
     std::map<std::string, temps> store{};
 
-    // Use a while loop together with the getline() function to read the file line by line
     while (getline (MyReadFile, myText)) {
-    // Output the text from the file
-        // std::cout << myText << std::endl;
 
-        s = strtok(myText.data(), delimiter);
-        f = std::atof(strtok(NULL, delimiter));
+        int delimeter_pos =  myText.find_first_of(";");
+        s = myText.substr(0, delimeter_pos);
+        f = std::atof(myText.substr(delimeter_pos + 1, -1).data());
 
 
-        // std::cout << "pased info. string:" << s << "   parse float: " << f << std::endl;
-
+        std::cout << "pased info. string:" << s << "   parse float: " << f << std::endl;
         auto res = store.find(s);
         if (res == store.end()){
             store.insert(std::pair<std::string, temps>(s, temps{f}));
